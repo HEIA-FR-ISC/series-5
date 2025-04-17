@@ -1,0 +1,47 @@
+name: Autograding with Combined Tests
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+  autograding:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+
+    steps:
+      # 1. Checkout du dépôt de l'élève
+      - name: Checkout student repository
+        uses: actions/checkout@v4
+
+      # 2. Checkout du dépôt privé d'autograding
+      - name: Checkout private tests repository
+        uses: actions/checkout@v4
+        with:
+          repository: HEIA-FR-ISC/series-5
+          token: ${{ secrets.AUTOGRADER_TOKEN }}
+          path: private-tests
+
+      # 3. Copier les fichiers de tests depuis le dépôt privé dans le dossier de tests de l'élève
+      - name: Merge tests into student's repository
+        run: |
+          for i in autograding-series.5/Exercise*; do
+            EX_NAME="$(basename "$i")"
+            cp -R "$i/test/"* "$EX_NAME/test/"
+          done
+
+      # 4. Setup Java
+      - name: Setup JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      # 5. Exécuter les tests avec Gradle
+      - name: Run Gradle tests
+        run: ./gradlew test
