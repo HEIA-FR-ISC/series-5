@@ -30,9 +30,11 @@ jobs:
       # 3. Copier les fichiers de tests depuis le dépôt privé dans le dossier de tests de l'élève
       - name: Merge tests into student's repository
         run: |
-          for i in private-tests/Exercise*; do
-            EX_NAME="$(basename "$i")"
-            cp -R "$i/test/"* "$EX_NAME/test/"
+          for src in private-tests/Exercise*; do
+            EXER=${src#private-tests/}
+            echo "Copying tests from $src/test to $EXER/test"
+            mkdir -p "$EXER/test"
+            cp -R "$src/test/"* "$EXER/test/"
           done
 
       # 4. Setup Java
