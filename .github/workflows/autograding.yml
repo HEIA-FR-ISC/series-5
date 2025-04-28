@@ -43,6 +43,10 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      # 5. Exécuter les tests avec Gradle
+      # 5. Rendre Gradle exécutable
+      - name: Grant execute permission on Gradle Wrapper
+        run: chmod +x gradlew
+
+      # 6. Exécuter les tests avec Gradle
       - name: Run Gradle tests
         run: ./gradlew test
