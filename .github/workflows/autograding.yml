@@ -23,14 +23,14 @@ jobs:
       - name: Checkout private tests repository
         uses: actions/checkout@v4
         with:
-          repository: HEIA-FR-ISC/series-5
+          repository: HEIA-FR-ISC/autograding-series-5
           token: ${{ secrets.AUTOGRADER_TOKEN }}
           path: private-tests
 
       # 3. Copier les fichiers de tests depuis le dépôt privé dans le dossier de tests de l'élève
       - name: Merge tests into student's repository
         run: |
-          for i in autograding-series.5/Exercise*; do
+          for i in private-tests/Exercise*; do
             EX_NAME="$(basename "$i")"
             cp -R "$i/test/"* "$EX_NAME/test/"
           done
