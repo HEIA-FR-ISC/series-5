@@ -31,8 +31,7 @@ jobs:
       - name: Merge tests into student's repository
         run: |
           for src in private-tests/Exercise*; do
-            EXER=${src#private-tests/}
-            echo "Copying tests from $src/test to $EXER/test"
+            EXER=$(basename "$src")
             mkdir -p "$EXER/test"
             cp -R "$src/test/"* "$EXER/test/"
           done
