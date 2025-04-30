@@ -26,6 +26,7 @@ jobs:
           repository: HEIA-FR-ISC/autograding-series-5
           token: ${{ secrets.AUTOGRADER_TOKEN }}
           path: private-tests
+          ref: main
 
       # 3. Copier les fichiers de tests depuis le dépôt privé dans le dossier de tests de l'élève
       - name: Merge tests into student's repository
