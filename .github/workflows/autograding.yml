@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: HEIA-FR-ISC/autograding-series-5
-          token: ${{ secrets.AUTOGRADER_TOKEN }}
+          token: ${{ secrets.AUTOGRADER_TOKEN_SERIES_5 }}
           path: private-tests
 
       # 3. Copier les fichiers de tests depuis le dépôt privé dans le dossier de tests de l'élève
